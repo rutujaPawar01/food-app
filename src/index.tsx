@@ -8,7 +8,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 let theme = createTheme({
   palette: {
     primary: {
-      main: "#fffff",
+      main: "#ffff",
     },
     secondary: {
       main: "#f9fbe7",
@@ -21,10 +21,11 @@ let theme = createTheme({
     },
     text: {
       primary: "#616161",
+      secondary: "#bdbdbd",
     },
   },
   typography: {
-    htmlFontSize: 10,
+    htmlFontSize: 15,
     subtitle1: {
       fontSize: 15,
       fontWeight: 'bold'
@@ -38,6 +39,11 @@ let theme = createTheme({
     body1: {
       fontSize: 16,
       color: "#616161"
+    },
+    h6: {
+      fontSize: 23,
+      color: "#ff1744",
+      fontWeight: 'bold'
     },
   },
 });

@@ -5,21 +5,16 @@ import Header from './components/header/header.component';
 import HomePage from './pages/home/home.component';
 import MenuPage from './pages/menu/menu.component';
 import { Container, Box } from '@mui/material';
+import FormPage from './pages/formPage/form-page.component';
 
 function App() {
   return (
     <div className="App">
-      {/* <div style={{ width: 300 }}>
-        <InfoCard
-          imageUrl="/assets/images/Calendar.png"
-          titleText="Trail End Road United states"
-          subtitleText="Working Hours"
-          bgColor="#ffcf33" />
-      </div> */}
       <Container >
         <Box sx={{ height: '100vh' }}>
           <Header />
           <HomePage />
+          <FormPage />
           <MenuPage />
           <Footer />
         </Box>

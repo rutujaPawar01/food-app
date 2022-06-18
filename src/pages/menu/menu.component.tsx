@@ -4,7 +4,7 @@ import ProductTabs from '../../components/product-tab/product-tab.component';
 
 function MenuPage() {
     return (
-        <Box>
+        <Box sx={{mt:3}}>
             <Grid container>
                 <Grid item xs={8} sx={{ display: 'flex', justifyContent: 'start' }}>
                     <Typography variant="h3"> Our Popular Menu</Typography>
