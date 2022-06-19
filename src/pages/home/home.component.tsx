@@ -1,10 +1,34 @@
-import { Grid, Avatar, Menu, Button, styled, Typography, Box } from '@mui/material';
+import { Grid, Avatar, Menu, Button, styled, Typography, Box, useTheme, Theme } from '@mui/material';
 import InfoCard from '../../common/component/info-card/info-card.component';
 import RoundButton from '../../common/component/round-button/round-button';
 import NavTabs from '../../components/nav-tab/nav-tab.component';
 import ProductTabs from '../../components/product-tab/product-tab.component';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+
+interface IcontactData {
+    description: string,
+    icon: string,
+    id: number,
+    slug: string,
+    title: string
+}
 
 function HomePage() {
+    const theme = useTheme<Theme>();
+    const [contactData, setContactData] = useState<IcontactData[]>([]);
+
+    useEffect(() => {
+        axios.get('http://54.169.31.224:3000/contact')
+            .then(function (response) {
+                setContactData([...response.data.data]);
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            });
+    }, []);
+
     return (
         <Box sx={{
             backgroundImage: `url("assets/images/Group 9112.png")`,
@@ -31,28 +55,21 @@ function HomePage() {
                         <RoundButton>GET STARTED</RoundButton>
                     </Grid>
                 </Grid>
+
                 <Grid container sx={{ mt: 10 }} spacing={2}>
-                    <Grid item xs={4} sx={{ display: 'flex', justifyContent: 'start', textAlign: 'start', mt: 2 }}>
-                        <InfoCard
-                            imageUrl="/assets/images/Calendar.png"
-                            titleText="Trail End Road United states"
-                            subtitleText="Working Hours"
-                        />
-                    </Grid>
-                    <Grid item xs={4} sx={{ display: 'flex', justifyContent: 'start', textAlign: 'start', mt: 2 }}>
-                        <InfoCard
-                            imageUrl="/assets/images/Calendar.png"
-                            titleText="Trail End Road United states"
-                            subtitleText="Working Hours"
-                            bgColor="#ffcf33" />
-                    </Grid>
-                    <Grid item xs={4} sx={{ display: 'flex', justifyContent: 'start', textAlign: 'start', mt: 2 }}>
-                        <InfoCard
-                            imageUrl="/assets/images/Calendar.png"
-                            titleText="Trail End Road United states"
-                            subtitleText="Working Hours"
-                        />
-                    </Grid>
+                    {
+                        contactData.map((contactItem, index) => {
+                            return <Grid key={contactItem.id} item xs={4} sx={{ display: 'flex', justifyContent: 'start', textAlign: 'start', mt: 2 }}>
+                                <InfoCard 
+                                    bgColor={index===1?theme.palette.info.main:''}
+                                    imageUrl={contactItem.icon}
+                                    titleText={contactItem.description}
+                                    subtitleText={contactItem.title}
+                                />
+                            </Grid>
+                        })
+                    }
+
                 </Grid>
             </Box>
         </Box >

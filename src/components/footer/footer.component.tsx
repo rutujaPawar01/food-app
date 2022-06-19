@@ -9,7 +9,8 @@ function Footer() {
                 height: 100, 
                 display: 'flex', 
                 alignItems: 'center', 
-                justifyContent: 'center'
+                justifyContent: 'center',
+                mt:5
             }} >
                 Copyright @ 2022 abcd. All rights reserved.
             </Grid>

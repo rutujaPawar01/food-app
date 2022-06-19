@@ -1,9 +1,12 @@
-import { Grid, Avatar, Menu, Button, styled } from '@mui/material';
+import { Grid, Avatar, Popper, Box, styled, Paper } from '@mui/material';
 import RoundButton from '../../common/component/round-button/round-button';
 import NavTabs from '../nav-tab/nav-tab.component';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Badge, { BadgeProps } from '@mui/material/Badge';
 import { ShoppingCartOutlined } from '@mui/icons-material';
+import { useState } from 'react';
+import Cart from '../cart/cart.component';
+
 
 const theme = createTheme({
     palette: {
@@ -28,8 +31,17 @@ const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
 }));
 
 function Header() {
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(anchorEl ? null : event.currentTarget);
+    };
+
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popper' : undefined;
+
     return (
-        <Grid container sx={{mt:5}}>
+        <Grid container sx={{ mt: 5 }}>
             <Grid item xs={4}>
                 <div>
                     <Avatar sx={{
@@ -50,11 +62,16 @@ function Header() {
             <Grid item xs={4}>
                 <Grid container>
                     <Grid item xs={8} sx={{ justifyContent: 'flex-end', display: 'flex' }}>
-                        <StyledBadge badgeContent={4} color="secondary">
+                        <StyledBadge badgeContent={4} color="secondary" onClick={handleClick}>
                             <Badge badgeContent={4} color="secondary">
                                 <ShoppingCartOutlined color="action" />
                             </Badge>
                         </StyledBadge>
+                        <Popper id={id} open={open} anchorEl={anchorEl}>
+                            <Paper elevation={3} sx={{width: 500}}>
+                                <Cart />
+                            </Paper>
+                        </Popper>
                     </Grid>
                     <Grid item xs={4}>
                         <RoundButton>Log In</RoundButton>

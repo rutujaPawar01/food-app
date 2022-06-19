@@ -1,10 +1,10 @@
-import { Grid, Avatar, Menu, Button, styled, Typography, Box } from '@mui/material';
-import NavTabs from '../../components/nav-tab/nav-tab.component';
+import { Grid, Typography, Box } from '@mui/material';
 import ProductTabs from '../../components/product-tab/product-tab.component';
+import Slider from '../../components/slider/slider.component';
 
 function MenuPage() {
     return (
-        <Box sx={{mt:3}}>
+        <Box sx={{ mt: 3 }}>
             <Grid container>
                 <Grid item xs={8} sx={{ display: 'flex', justifyContent: 'start' }}>
                     <Typography variant="h3"> Our Popular Menu</Typography>
@@ -22,6 +22,7 @@ function MenuPage() {
                     <ProductTabs />
                 </Grid>
             </Grid>
+            <Slider />
         </Box>
     );
 }

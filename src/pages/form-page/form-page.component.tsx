@@ -1,4 +1,5 @@
 import { Grid, Avatar, Menu, Button, styled, Typography, Box } from '@mui/material';
+import { useState } from 'react';
 import Form from '../../components/form/form.component';
 import NavTabs from '../../components/nav-tab/nav-tab.component';
 import ProductTabs from '../../components/product-tab/product-tab.component';
@@ -7,7 +8,7 @@ function FormPage() {
     return (
         <Box sx={{ bgcolor: 'secondary.main', padding: 10, borderRadius: 5, mt: 3 }}>
             <Grid container>
-                <Grid item xs={8} sx={{ display: 'flex',  flexDirection: 'column', justifyContent: 'center' }}>
+                <Grid item xs={8} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                     <Grid container>
                         <Grid item xs={8} sx={{ display: 'flex', justifyContent: 'start', textAlign: 'start' }}>
                             <Typography variant="h3">Receive payment quickly from anywhere</Typography>

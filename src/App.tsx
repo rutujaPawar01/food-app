@@ -5,7 +5,7 @@ import Header from './components/header/header.component';
 import HomePage from './pages/home/home.component';
 import MenuPage from './pages/menu/menu.component';
 import { Container, Box } from '@mui/material';
-import FormPage from './pages/formPage/form-page.component';
+import FormPage from './pages/form-page/form-page.component';
 
 function App() {
   return (
