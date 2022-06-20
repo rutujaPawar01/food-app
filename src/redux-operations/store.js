@@ -1,11 +1,13 @@
+
+const local = JSON.parse(localStorage.getItem("data"));
 const initialProduct = {
-    products: []
+    products: local ? local.products : []
 };
 
 const removeProduct = (state, action) => {
     const newProds = [...state.products];
 
-    const idx = newProds.findIndex(prod => prod.slug == action.slug);
+    const idx = newProds.findIndex(prod => prod.slug === action.slug);
     newProds.splice(idx, 1);
 
     return newProds;
@@ -14,29 +16,38 @@ const removeProduct = (state, action) => {
 const removeProductCategory = (state, action) => {
     const newProds = [...state.products];
 
-    const idx = newProds.findIndex(prod => prod.slug == action.slug);
-    newProds.splice(idx, 1);
+    return newProds.filter(prod => prod.slug !== action.slug);
+}
 
-    return newProds;
+const saveToLocalStorage = (products) => {
+    localStorage.setItem("data", JSON.stringify({ products }));
 }
 
 function reducer(state = initialProduct, action) {
-    console.log("pre", state);
     switch (action.type) {
         case "ADD_PRODUCT":
+            const updatedState = [...state.products, action.data];
+            saveToLocalStorage(updatedState);
+
             return {
                 ...state,
-                products: [...state.products, action.data]
+                products: updatedState
             };
         case "REMOVE_PRODUCT":
+            const removedState = removeProduct(state, action);
+            saveToLocalStorage(removedState);
+
             return {
                 ...state,
-                products: removeProduct(state, action)
+                products: removedState
             };
         case "REMOVE_PRODUCT_CATEGORY":
+            const removedStateAll = removeProductCategory(state, action);
+            saveToLocalStorage(removedStateAll);
+
             return {
                 ...state,
-                products: removeProductCategory(state, action)
+                products: removedStateAll
             };
         default:
             return state;

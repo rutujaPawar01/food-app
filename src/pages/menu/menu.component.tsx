@@ -9,7 +9,7 @@ function MenuPage() {
     const [currentCategory, setCurrentCategory] = useState<Icategories>();
 
     return (
-        <Box sx={{ mt: 3 }}>
+        <Box sx={{ mt: 3 }} id="menu">
             <Grid container>
                 <Grid item xs={8} sx={{ display: 'flex', justifyContent: 'start' }}>
                     <Typography variant="h3"> Our Popular Menu</Typography>

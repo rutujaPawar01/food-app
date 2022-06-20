@@ -20,6 +20,14 @@ function CartItem({ foodItem }: { foodItem: ICartData }) {
       slug: foodItem.slug
     })
   }
+
+  const handleCartRemoveCategory = () => {
+    dispatch({
+      type: "REMOVE_PRODUCT_CATEGORY",
+      slug: foodItem.slug
+    })
+  }
+
   return (
     <Box sx={{
       borderBottom: '1px solid black',
@@ -58,7 +66,7 @@ function CartItem({ foodItem }: { foodItem: ICartData }) {
         </Grid>
       </Grid>
       <Grid container sx={{ mt: 1 }}>
-        <Link sx={{ color: 'red' }}>Remove</Link>
+        <Link sx={{ color: 'red' }} onClick={handleCartRemoveCategory}>Remove</Link>
       </Grid>
     </Box >
   );

@@ -6,7 +6,7 @@ import ProductTabs from '../../components/product-tab/product-tab.component';
 
 function FormPage() {
     return (
-        <Box sx={{ bgcolor: 'secondary.main', padding: 10, borderRadius: 5, mt: 3 }}>
+        <Box sx={{ bgcolor: 'secondary.main', padding: 10, borderRadius: 5, mt: 3 }} id="form">
             <Grid container>
                 <Grid item xs={8} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                     <Grid container>

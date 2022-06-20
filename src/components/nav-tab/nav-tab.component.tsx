@@ -14,6 +14,7 @@ function LinkTab(props: LinkTabProps) {
     <Tab
       component="a"
       onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        window.location.href = props.href
         event.preventDefault();
       }}
       {...props}
@@ -21,7 +22,7 @@ function LinkTab(props: LinkTabProps) {
   );
 }
 
-export default function NavTabs() {  
+export default function NavTabs() {
   const [value, setValue] = React.useState(0);
   const theme = useTheme();
 
@@ -32,9 +33,9 @@ export default function NavTabs() {
   return (
     <Box sx={{ width: '100%' }}>
       <Tabs value={value} onChange={handleChange} indicatorColor="primary">
-        <LinkTab label="Home" href="/drafts" />
-        <LinkTab label="Form" href="/trash" />
-        <LinkTab label="Menu" href="/spam" />
+        <LinkTab label="Home" href="/#home" />
+        <LinkTab label="Form" href="/#form" />
+        <LinkTab label="Menu" href="/#menu" />
       </Tabs>
     </Box>
   );

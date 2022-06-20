@@ -1,12 +1,11 @@
-import { Grid, Avatar, Menu, Button, styled, Typography, Box, useTheme, Theme } from '@mui/material';
+import { Grid, Typography, Box, useTheme, Theme } from '@mui/material';
 import InfoCard from '../../common/component/info-card/info-card.component';
 import RoundButton from '../../common/component/round-button/round-button';
-import NavTabs from '../../components/nav-tab/nav-tab.component';
-import ProductTabs from '../../components/product-tab/product-tab.component';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+
 
 interface IcontactData {
     description: string,
@@ -39,35 +38,8 @@ function HomePage() {
             backgroundRepeat: 'no-repeat',
             backgroundPositionX: 'right',
             mt: 5
-        }}>
+        }} id="home">
             <Box sx={{ pt: 15 }}>
-                <button
-                    onClick={() =>
-                        dispatch({
-                            type: "ADD_PRODUCT",
-                            data: {
-                                description: "Mon Fri : 10AM -9:30PM",
-                                icon: "http://localhost:3000/uploads/contact/Calendar.png",
-                                id: 1,
-                                slug: "working-hours",
-                                title: "Working Hours",
-                            }
-                        })
-                    }
-                >
-                    Increment
-                </button>
-                <button
-                    onClick={() =>
-                        dispatch({
-                            type: "REMOVE_PRODUCT",
-                            slug: "working-hours"
-                        })
-                    }
-                >
-                    Decre
-                </button>
-
                 <Grid container>
                     <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'start', textAlign: 'start' }}>
                         <Typography variant="h3">Different Spice For A Different Taste</Typography>
