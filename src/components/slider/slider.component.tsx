@@ -1,48 +1,11 @@
-import { Grid, Box } from '@mui/material';
+import { Grid, Skeleton } from '@mui/material';
 import ProductCard from '../../common/component/product-card/product-card.component';
-import { Paper, Button } from '@mui/material';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { IfoodItems } from '../../pages/menu/food-items.type';
 
-function Example(props) {
-    var items = [
-        {
-            name: "Random Name #1",
-            description: "Probably the most random thing you have ever seen!"
-        },
-        {
-            name: "Random Name #2",
-            description: "Hello World!"
-        },
-        {
-            name: "Random Name #1",
-            description: "Probably the most random thing you have ever seen!"
-        },
-        {
-            name: "Random Name #2",
-            description: "Hello World!"
-        },
-        {
-            name: "Random Name #1",
-            description: "Probably the most random thing you have ever seen!"
-        },
-        {
-            name: "Random Name #2",
-            description: "Hello World!"
-        }
-    ]
-
-    return (
-        <Carousel
-            partialVisbile
-            itemClass="image-item"
-            responsive={responsive}>
-            {
-                items.map((item, i) => <Item key={i} item={item} />)
-            }
-        </Carousel>
-    )
-}
 const responsive = {
     desktop: {
         breakpoint: { max: 3000, min: 1024 },
@@ -61,72 +24,45 @@ const responsive = {
     }
 };
 
-var items = [
-    {
-        name: "Random Name #1",
-        description: "Probably the most random thing you have ever seen!"
-    },
-    {
-        name: "Random Name #2",
-        description: "Hello World!"
-    },
-    {
-        name: "Random Name #1",
-        description: "Probably the most random thing you have ever seen!"
-    },
-    {
-        name: "Random Name #2",
-        description: "Hello World!"
-    },
-    {
-        name: "Random Name #1",
-        description: "Probably the most random thing you have ever seen!"
-    },
-    {
-        name: "Random Name #2",
-        description: "Hello World!"
-    }
-]
+function Slider({ category }: { category: string }) {
+    const [foodItems, setFoodItems] = useState<IfoodItems[]>();
 
-function Item(props) {
-    return (
-        <Paper>
-            <h2>{props.item.name}</h2>
-            <p>{props.item.description}</p>
-
-            <Button className="CheckButton">
-                Check it out!
-            </Button>
-        </Paper>
-    )
-}
-function Slider() {
-    return (
+    useEffect(() => {
+        axios.get('http://54.169.31.224:3000/category/' + category)
+            .then(function (response) {
+                setFoodItems([...response.data.data]);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }, [category]);
+    return foodItems && foodItems.length > 0 ?
         <Carousel
+            infinite
+            autoPlay
             partialVisbile
             itemClass="image-item"
             responsive={responsive}>
-
+            {foodItems.map((food: IfoodItems) => <React.Fragment key={food.id}>
+                <Grid item xs={3} sx={{ padding: '20px 0px 20px 20px' }}>
+                    <ProductCard food={food} imageUrl={food.image} titleText={food.title} subtitleText={`${food.currency}${food.price}`} />
+                </Grid>
+            </React.Fragment>)}
+        </Carousel> :
+        <Grid container spacing={3}>
             <Grid item xs={3} sx={{ padding: '20px 0px 20px 20px' }}>
-                <ProductCard imageUrl="assets/images/pizza 1.png" titleText="Japaniz Pizza" subtitleText='$8.22' />
+                <Skeleton variant="rectangular" width={300} height={400} />
             </Grid>
             <Grid item xs={3} sx={{ padding: '20px 0px 20px 20px' }}>
-                <ProductCard imageUrl="assets/images/pizza 1.png" titleText="Japaniz Pizza" subtitleText='$8.22' />
+                <Skeleton variant="rectangular" width={300} height={400} />
             </Grid>
             <Grid item xs={3} sx={{ padding: '20px 0px 20px 20px' }}>
-                <ProductCard imageUrl="assets/images/pizza 1.png" titleText="Japaniz Pizza" subtitleText='$8.22' />
+                <Skeleton variant="rectangular" width={300} height={400} />
             </Grid>
             <Grid item xs={3} sx={{ padding: '20px 0px 20px 20px' }}>
-                <ProductCard imageUrl="assets/images/pizza 1.png" titleText="Japaniz Pizza" subtitleText='$8.22' />
+                <Skeleton variant="rectangular" width={300} height={400} />
             </Grid>
-            <Grid item xs={3} sx={{ padding: '20px 0px 20px 20px' }}>
-                <ProductCard imageUrl="assets/images/pizza 1.png" titleText="Japaniz Pizza" subtitleText='$8.22' />
-            </Grid>
-            <Grid item xs={3} sx={{ padding: '20px 0px 20px 20px' }}>
-                <ProductCard imageUrl="assets/images/pizza 1.png" titleText="Japaniz Pizza" subtitleText='$8.22' />
-            </Grid>
-        </Carousel>
-    );
+        </Grid>
 }
 
 export default Slider;

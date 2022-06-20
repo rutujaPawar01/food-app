@@ -1,8 +1,13 @@
 import { Grid, Typography, Box } from '@mui/material';
 import ProductTabs from '../../components/product-tab/product-tab.component';
 import Slider from '../../components/slider/slider.component';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Icategories } from './categories.type';
 
 function MenuPage() {
+    const [currentCategory, setCurrentCategory] = useState<Icategories>();
+
     return (
         <Box sx={{ mt: 3 }}>
             <Grid container>
@@ -19,10 +24,10 @@ function MenuPage() {
             </Grid>
             <Grid container>
                 <Grid item xs={12}>
-                    <ProductTabs />
+                    <ProductTabs {...{ currentCategory, setCurrentCategory }} />
                 </Grid>
             </Grid>
-            <Slider />
+            <Slider category={currentCategory?.slug} />
         </Box>
     );
 }

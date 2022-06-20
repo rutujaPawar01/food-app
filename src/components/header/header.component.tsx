@@ -6,6 +6,7 @@ import Badge, { BadgeProps } from '@mui/material/Badge';
 import { ShoppingCartOutlined } from '@mui/icons-material';
 import { useState } from 'react';
 import Cart from '../cart/cart.component';
+import { useSelector, useDispatch } from "react-redux";
 
 
 const theme = createTheme({
@@ -31,7 +32,9 @@ const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
 }));
 
 function Header() {
+    const dispatch = useDispatch();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const count = useSelector<number>((state: any) => state.products.length);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(anchorEl ? null : event.currentTarget);
@@ -62,13 +65,13 @@ function Header() {
             <Grid item xs={4}>
                 <Grid container>
                     <Grid item xs={8} sx={{ justifyContent: 'flex-end', display: 'flex' }}>
-                        <StyledBadge badgeContent={4} color="secondary" onClick={handleClick}>
-                            <Badge badgeContent={4} color="secondary">
+                        <StyledBadge badgeContent={count as number} color="secondary" onClick={handleClick}>
+                            <Badge badgeContent={count as number} color="secondary">
                                 <ShoppingCartOutlined color="action" />
                             </Badge>
                         </StyledBadge>
                         <Popper id={id} open={open} anchorEl={anchorEl}>
-                            <Paper elevation={3} sx={{width: 500}}>
+                            <Paper elevation={3} sx={{ width: 500 }}>
                                 <Cart />
                             </Paper>
                         </Popper>

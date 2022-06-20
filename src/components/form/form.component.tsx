@@ -2,6 +2,7 @@ import { Message } from '@mui/icons-material';
 import { Avatar, Grid, Alert, styled, TextField, Typography, Snackbar, Button } from '@mui/material';
 import axios from 'axios';
 import { useState } from 'react';
+import { text } from 'stream/consumers';
 import Toast from '../toast/toast.component';
 
 const CssTextField = styled(TextField)(({ theme }) => ({
@@ -24,6 +25,7 @@ const CssTextField = styled(TextField)(({ theme }) => ({
     },
   },
 }));
+
 function Form() {
   const [name, setName] = useState<string>(null);
   const [email, setEmail] = useState<string>(null);
@@ -31,15 +33,49 @@ function Form() {
   const [open, setOpen] = useState<boolean>(false);
   const [message, setMesage] = useState<string>('');
   const [isSuccess, setSuccess] = useState<boolean>(false);
+  const [isNameValid, setIsNameValid] = useState<boolean>(true);
+  const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
+  const [isPasswordValid, setIsPasswordValid] = useState<boolean>(true);
+
+  const checkNameValid = (text:string) => {
+    const pattern = /^[a-zA-Z]+$/;
+    if(text.trim().length && pattern.test(text.trim())){
+      setIsNameValid(true);
+    }else{
+      setIsNameValid(false);
+    }
+  }
+
+  const checkEmailValid = (text:string) => {
+    const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if(text.trim().length && pattern.test(text.trim())){
+      setIsEmailValid(true);
+    }else{
+      setIsEmailValid(false);
+    }
+  }
+
+  const checkPasswordValid = (text:string) => {
+    if(text.trim().length >= 6){
+      setIsPasswordValid(true);
+    }else{
+      setIsPasswordValid(false);
+    }
+  }
 
   const handleChange = (e) => {
     if (e.target.name === "name") {
       setName(e.target.value);
+      checkNameValid(e.target.value);
     } else if (e.target.name === "email") {
       setEmail(e.target.value);
+      checkEmailValid(e.target.value);
     } else {
       setPassword(e.target.value);
+      checkPasswordValid(e.target.value);
     }
+
+    
   }
 
   const submit = () => {
@@ -49,10 +85,17 @@ function Form() {
       password
     })
       .then(function (response) {
-        console.log(response);
+        setOpen(true);
+        setSuccess(true);
+        setMesage(response.data.message);
       })
       .catch(function (error) {
-        console.log(error);
+        setOpen(true);
+        setSuccess(false);
+        if(error?.response?.data?.message[0]?.constraints){
+          const errorKey = Object.keys(error.response.data.message[0].constraints);
+        setMesage(error.response.data.message[0].constraints[errorKey[0]]);
+        } 
       });
   }
 
@@ -71,16 +114,25 @@ function Form() {
       <Grid container>
         <Grid item xs={12} sx={{ mt: 2 }}>
           <CssTextField fullWidth onChange={handleChange} label="Name" name="name" />
+          {!isNameValid && <Typography color="error.main">
+            Please enter valid name.
+          </Typography>}
         </Grid>
       </Grid>
       <Grid container>
         <Grid item xs={12} sx={{ mt: 2 }}>
           <CssTextField fullWidth onChange={handleChange} label="Email Address" name="email" />
+          {!isEmailValid && <Typography color="error.main">
+            Please enter valid email id.
+          </Typography>}
         </Grid>
       </Grid>
       <Grid container>
         <Grid item xs={12} sx={{ mt: 2 }}>
-          <CssTextField fullWidth onChange={handleChange} label="Password" name="password" />
+          <CssTextField fullWidth onChange={handleChange} label="Password" name="password" type="password"/>
+          {!isPasswordValid && <Typography color="error.main">
+          Password must be longer than or equal to 6 characters.
+          </Typography>}
         </Grid>
       </Grid>
       <Grid container>

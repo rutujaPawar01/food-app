@@ -1,8 +1,25 @@
 import { Avatar, Grid, Paper, styled, TextField, Typography, InputBase, Box, IconButton, Link } from '@mui/material';
 import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+import { ICartData } from '../cart/cart-data.type';
+import { useDispatch } from 'react-redux';
 
-function CartItem() {
+function CartItem({ foodItem }: { foodItem: ICartData }) {
+  const dispatch = useDispatch();
+
+  const handleCartAdd = () => {
+    dispatch({
+      type: "ADD_PRODUCT",
+      data: foodItem
+    })
+  }
+
+  const handleCartRemove = () => {
+    dispatch({
+      type: "REMOVE_PRODUCT",
+      slug: foodItem.slug
+    })
+  }
   return (
     <Box sx={{
       borderBottom: '1px solid black',
@@ -16,28 +33,28 @@ function CartItem() {
           <Grid container>
             <Grid container>
               <Grid item xs={12} sx={{ textAlign: 'center' }}>
-                Product Name
+                {foodItem.title}
               </Grid>
             </Grid>
             <Grid container spacing="2" sx={{ display: 'flex', alignItems: 'center' }}>
               <Grid item xs={4} sx={{ textAlign: 'center' }}>
-                <IconButton aria-label="remove">
+                <IconButton aria-label="remove" onClick={handleCartRemove}>
                   <RemoveOutlinedIcon />
                 </IconButton>
               </Grid>
               <Grid item xs={4} sx={{ textAlign: 'center' }}>
-                2
+                {foodItem.count}
               </Grid>
               <Grid item xs={4} sx={{ textAlign: 'center' }}>
-                <IconButton aria-label="add">
+                <IconButton aria-label="add" onClick={handleCartAdd}>
                   <AddOutlinedIcon />
                 </IconButton>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={3} sx={{ textAlign: 'end' }}>
-          <Typography variant='h6'>$1234</Typography>
+        <Grid item xs={3} sx={{ textAlign: 'center' }}>
+          <Typography variant='body1'>{`${foodItem.currency}${foodItem.price}`}</Typography>
         </Grid>
       </Grid>
       <Grid container sx={{ mt: 1 }}>

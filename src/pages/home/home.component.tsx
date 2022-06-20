@@ -5,6 +5,8 @@ import NavTabs from '../../components/nav-tab/nav-tab.component';
 import ProductTabs from '../../components/product-tab/product-tab.component';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 interface IcontactData {
     description: string,
@@ -17,6 +19,7 @@ interface IcontactData {
 function HomePage() {
     const theme = useTheme<Theme>();
     const [contactData, setContactData] = useState<IcontactData[]>([]);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         axios.get('http://54.169.31.224:3000/contact')
@@ -38,6 +41,33 @@ function HomePage() {
             mt: 5
         }}>
             <Box sx={{ pt: 15 }}>
+                <button
+                    onClick={() =>
+                        dispatch({
+                            type: "ADD_PRODUCT",
+                            data: {
+                                description: "Mon Fri : 10AM -9:30PM",
+                                icon: "http://localhost:3000/uploads/contact/Calendar.png",
+                                id: 1,
+                                slug: "working-hours",
+                                title: "Working Hours",
+                            }
+                        })
+                    }
+                >
+                    Increment
+                </button>
+                <button
+                    onClick={() =>
+                        dispatch({
+                            type: "REMOVE_PRODUCT",
+                            slug: "working-hours"
+                        })
+                    }
+                >
+                    Decre
+                </button>
+
                 <Grid container>
                     <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'start', textAlign: 'start' }}>
                         <Typography variant="h3">Different Spice For A Different Taste</Typography>
@@ -60,8 +90,8 @@ function HomePage() {
                     {
                         contactData.map((contactItem, index) => {
                             return <Grid key={contactItem.id} item xs={4} sx={{ display: 'flex', justifyContent: 'start', textAlign: 'start', mt: 2 }}>
-                                <InfoCard 
-                                    bgColor={index===1?theme.palette.info.main:''}
+                                <InfoCard
+                                    bgColor={index === 1 ? theme.palette.info.main : ''}
                                     imageUrl={contactItem.icon}
                                     titleText={contactItem.description}
                                     subtitleText={contactItem.title}
