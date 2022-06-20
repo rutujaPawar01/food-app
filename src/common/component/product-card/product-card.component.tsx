@@ -1,29 +1,13 @@
 import { ShoppingCartOutlined } from '@mui/icons-material';
-import { Avatar, Grid, Paper, styled, Typography, Box, Button } from '@mui/material';
+import { Avatar, Grid, Paper, Typography, Box, Button } from '@mui/material';
 import { useDispatch } from 'react-redux';
-import { IfoodItems } from '../../../pages/menu/food-items.type';
+import { Centered, CustomizedBox } from './product-card.style';
+import { Iproductcard } from './product-card.type';
 
-const CustomizedBox = styled(Paper)`
-    width: 100%;
-    display: 'flex';
-`;
-
-const Centered = styled('div')`
-    display: flex;
-    justify-content: center;
-`;
-
-interface Iinfocard {
-    imageUrl: string;
-    titleText: string;
-    subtitleText: string;
-    food: IfoodItems;
-    bgColor?: string;
-}
-
-function ProductCard({ imageUrl, titleText, subtitleText, bgColor = "#fff", food }: Iinfocard) {
+function ProductCard({ imageUrl, titleText, subtitleText, bgColor = "#fff", food }: Iproductcard) {
     const dispatch = useDispatch();
 
+    /** Add the product to cart */
     const handleCartAdd = () => {
         dispatch({
             type: "ADD_PRODUCT",

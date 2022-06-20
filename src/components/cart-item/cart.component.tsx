@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 function CartItem({ foodItem }: { foodItem: ICartData }) {
   const dispatch = useDispatch();
 
+  /** Add product in product list */
   const handleCartAdd = () => {
     dispatch({
       type: "ADD_PRODUCT",
@@ -14,6 +15,7 @@ function CartItem({ foodItem }: { foodItem: ICartData }) {
     })
   }
 
+  /** Remove (reduce count) from product list */
   const handleCartRemove = () => {
     dispatch({
       type: "REMOVE_PRODUCT",
@@ -21,6 +23,7 @@ function CartItem({ foodItem }: { foodItem: ICartData }) {
     })
   }
 
+  /** Remove entire product from product list */
   const handleCartRemoveCategory = () => {
     dispatch({
       type: "REMOVE_PRODUCT_CATEGORY",
@@ -35,7 +38,7 @@ function CartItem({ foodItem }: { foodItem: ICartData }) {
     }}>
       <Grid container sx={{ mt: 3 }} spacing={1}>
         <Grid item xs={3}>
-          <Avatar sx={{ width: '100%', height: 'auto' }} alt="card-icon" src={'/assets/images/Logo with text.png'} variant="square" />
+          <Avatar sx={{ width: '100%', height: 70 }} alt="card-icon" src={foodItem.image} variant="square" />
         </Grid>
         <Grid item xs={6}>
           <Grid container>
@@ -61,8 +64,8 @@ function CartItem({ foodItem }: { foodItem: ICartData }) {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={3} sx={{ textAlign: 'center' }}>
-          <Typography variant='body1'>{`${foodItem.currency}${foodItem.price}`}</Typography>
+        <Grid item xs={3} sx={{ textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Typography sx={{mt:2}} variant='body1'>{`${foodItem.currency}${parseFloat(foodItem.price) * foodItem.count}`}</Typography>
         </Grid>
       </Grid>
       <Grid container sx={{ mt: 1 }}>

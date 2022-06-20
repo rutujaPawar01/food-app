@@ -1,6 +1,7 @@
 import { Alert, Snackbar } from '@mui/material';
+import { ItostProps } from './toast.types';
 
-function Toast({ open, onClose, message, isSuccess }: { open: boolean, onClose: () => void, message: string, isSuccess: boolean }) {
+function Toast({ open, onClose, message, isSuccess }: ItostProps) {
   return (
     <Snackbar
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}

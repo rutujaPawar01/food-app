@@ -1,21 +1,6 @@
-import { Avatar, Grid, Paper, styled, Typography } from '@mui/material';
-
-const CustomizedBox = styled(Paper)`
-    width: 100%;
-    display: 'flex';
-`;
-
-const Centered = styled('div')`
-    display: flex;
-    justify-content: center;
-`;
-
-interface Iinfocard {
-    imageUrl: string;
-    titleText: string;
-    subtitleText: string;
-    bgColor?: string;
-}
+import { Avatar, Grid, Paper, Typography } from '@mui/material';
+import { Centered, CustomizedBox } from './info-card.style';
+import { Iinfocard } from './info-card.type';
 
 function InfoCard({ imageUrl, titleText, subtitleText, bgColor = "#fff" }: Iinfocard) {
     return (

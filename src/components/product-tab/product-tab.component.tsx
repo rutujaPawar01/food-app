@@ -1,39 +1,11 @@
 import * as React from 'react';
-import { Tab, Tabs, Box, styled, Theme } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
-import { makeStyles } from '@mui/styles';
+import { Tab, Tabs, Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Icategories } from '../../pages/menu/categories.type';
-
-interface LinkTabProps {
-  label?: string;
-  href?: string;
-  value?: Icategories;
-}
-
-const useStyles = makeStyles((theme: Theme) => {
-  return {
-    customTab: {
-
-      "& .MuiTab-root": {
-        borderBottom: '1px solid black',
-        color: theme.palette.text.primary,
-      },
-      "& .Mui-selected": {
-        border: '1px solid black',
-        borderBottomStyle: 'none',
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
-      },
-      "& .MuiTabs-flexContainer": {
-        "& .Mui-selected": {
-          color: theme.palette.text.primary,
-        },
-      }
-    }
-  }
-});
+import { LinkTabProps } from './link-tab-props.types';
+import { IproductTabs } from './product-tabs.types';
+import { useStyles } from './product-tab.style';
 
 function LinkTab(props: LinkTabProps) {
   return (
@@ -47,21 +19,16 @@ function LinkTab(props: LinkTabProps) {
   );
 }
 
-interface IproductTabs {
-  currentCategory: Icategories,
-  setCurrentCategory: React.Dispatch<React.SetStateAction<Icategories>>
-}
-
-
 export default function ProductTabs({ currentCategory, setCurrentCategory }: IproductTabs) {
   const classes = useStyles();
   const [categories, setCategories] = useState<Icategories[]>();
 
   useEffect(() => {
+    /** get all category data */
     axios.get('http://54.169.31.224:3000/category')
       .then(function (response) {
         setCategories([...response.data.data]);
-        setCurrentCategory(response.data.data[0]);
+        setCurrentCategory(response.data.data[0]); //default category
       })
       .catch(function (error) {
         console.log(error);
@@ -75,7 +42,7 @@ export default function ProductTabs({ currentCategory, setCurrentCategory }: Ipr
   return (
     <Box sx={{ width: '100%', mt: 2, color: 'text.primary' }}>
       <Tabs value={currentCategory} onChange={handleChange} className={classes.customTab}>
-        {categories && categories.map(item => <LinkTab label={item.name} href="/" value={item} />)}
+        {categories && categories.map(item => <LinkTab key={item.slug} label={item.name} href="/" value={item} />)}
       </Tabs>
     </Box>
   );

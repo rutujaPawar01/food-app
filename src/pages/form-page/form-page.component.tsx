@@ -1,12 +1,9 @@
-import { Grid, Avatar, Menu, Button, styled, Typography, Box } from '@mui/material';
-import { useState } from 'react';
+import { Grid, Typography, Box } from '@mui/material';
 import Form from '../../components/form/form.component';
-import NavTabs from '../../components/nav-tab/nav-tab.component';
-import ProductTabs from '../../components/product-tab/product-tab.component';
 
 function FormPage() {
     return (
-        <Box sx={{ bgcolor: 'secondary.main', padding: 10, borderRadius: 5, mt: 3 }} id="form">
+        <Box sx={{ bgcolor: 'secondary.main', padding: 10, borderRadius: 5, mt: 10 }} id="form">
             <Grid container>
                 <Grid item xs={8} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                     <Grid container>

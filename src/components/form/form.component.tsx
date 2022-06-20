@@ -4,27 +4,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { text } from 'stream/consumers';
 import Toast from '../toast/toast.component';
-
-const CssTextField = styled(TextField)(({ theme }) => ({
-  '& .MuiInputLabel-root': {
-    color: theme.palette.text.secondary,
-  },
-  '& label.Mui-focused': {
-    color: theme.palette.info.main,
-  },
-  '& .MuiInput-underline:after': {
-    borderBottomColor: theme.palette.info.main,
-  },
-  '& .MuiOutlinedInput-root': {
-    backgroundColor: theme.palette.primary.main,
-    '& fieldset': {
-      borderColor: theme.palette.primary.main,
-    },
-    '&.Mui-focused fieldset': {
-      borderColor: theme.palette.info.main,
-    },
-  },
-}));
+import { CssTextField } from './form.style';
 
 function Form() {
   const [name, setName] = useState<string>(null);
@@ -37,28 +17,28 @@ function Form() {
   const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
   const [isPasswordValid, setIsPasswordValid] = useState<boolean>(true);
 
-  const checkNameValid = (text:string) => {
+  const checkNameValid = (text: string) => {
     const pattern = /^[a-zA-Z]+$/;
-    if(text.trim().length && pattern.test(text.trim())){
+    if (text.trim().length && pattern.test(text.trim())) {
       setIsNameValid(true);
-    }else{
+    } else {
       setIsNameValid(false);
     }
   }
 
-  const checkEmailValid = (text:string) => {
+  const checkEmailValid = (text: string) => {
     const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if(text.trim().length && pattern.test(text.trim())){
+    if (text.trim().length && pattern.test(text.trim())) {
       setIsEmailValid(true);
-    }else{
+    } else {
       setIsEmailValid(false);
     }
   }
 
-  const checkPasswordValid = (text:string) => {
-    if(text.trim().length >= 6){
+  const checkPasswordValid = (text: string) => {
+    if (text.trim().length >= 6) {
       setIsPasswordValid(true);
-    }else{
+    } else {
       setIsPasswordValid(false);
     }
   }
@@ -74,8 +54,6 @@ function Form() {
       setPassword(e.target.value);
       checkPasswordValid(e.target.value);
     }
-
-    
   }
 
   const submit = () => {
@@ -92,10 +70,10 @@ function Form() {
       .catch(function (error) {
         setOpen(true);
         setSuccess(false);
-        if(error?.response?.data?.message[0]?.constraints){
+        if (error?.response?.data?.message[0]?.constraints) {
           const errorKey = Object.keys(error.response.data.message[0].constraints);
-        setMesage(error.response.data.message[0].constraints[errorKey[0]]);
-        } 
+          setMesage(error.response.data.message[0].constraints[errorKey[0]]);
+        }
       });
   }
 
@@ -129,9 +107,9 @@ function Form() {
       </Grid>
       <Grid container>
         <Grid item xs={12} sx={{ mt: 2 }}>
-          <CssTextField fullWidth onChange={handleChange} label="Password" name="password" type="password"/>
+          <CssTextField fullWidth onChange={handleChange} label="Password" name="password" type="password" />
           {!isPasswordValid && <Typography color="error.main">
-          Password must be longer than or equal to 6 characters.
+            Password must be longer than or equal to 6 characters.
           </Typography>}
         </Grid>
       </Grid>

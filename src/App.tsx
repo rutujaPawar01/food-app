@@ -9,7 +9,7 @@ import FormPage from './pages/form-page/form-page.component';
 
 function App() {
   return (
-    <div className="App">
+    <Box className="App" sx={{ bgcolor: "secondary.main" }}>
       <Container >
         <Box sx={{ height: '100vh' }}>
           <Header />
@@ -19,7 +19,7 @@ function App() {
           <Footer />
         </Box>
       </Container>
-    </div>
+    </Box>
   );
 }
 

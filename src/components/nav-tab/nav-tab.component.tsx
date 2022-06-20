@@ -3,11 +3,7 @@ import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { useTheme } from '@mui/material/styles';
-
-interface LinkTabProps {
-  label?: string;
-  href?: string;
-}
+import { LinkTabProps } from './nav-tab-props.types';
 
 function LinkTab(props: LinkTabProps) {
   return (
